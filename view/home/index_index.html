@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>猫女</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/media-queries.css" type="text/css" />
+
+</head>
+<body class="home sidebar-none timeline">
+<div id="pagewrap">
+    <%include inc/header.html%>
+    
+    <div id="body" class="clearfix"> 
+        <!-- layout -->
+        <div id="layout" class="pagewidth clearfix">
+            <!-- content -->
+            <div id="content" class="clearfix">
+                <!-- loops-wrapper -->
+                <div class="loops-timeline infinite-scrolling">
+                    <div class="timeline-nav-wrap">
+                        <ul class="timeline-nav">
+                            <%timeLine.years.forEach(function(year){%>
+                            <li>
+                                <a class="timeline-nav-year" href="#"><%= year%></a>
+                                <ul class="timeline-nav-months">
+                                    <%timeLine.months[year].forEach(function(month){%>
+                                    <li>
+                                        <a class="jump-month" data-jump="jump-<%= year%>-<%= month%>" data-year="<%= year%>" data-month="<%= month%>" href=""><%= month%>月</a>
+                                    </li>
+                                    <%})%>
+                                </ul>
+                                <!-- /timeline-nav-months -->
+                            </li>
+                            <%})%>
+                        </ul>
+                    </div>
+                    <!-- /timeline-nav -->
+
+                    <div class="timeline-wrap">
+                        <div class="timeline-bar"></div><!-- /timeline-bar -->
+                        <div class="timeline-start-dot"></div><!-- /timeline-start-dot -->
+                        <div class="timeline-content">
+                            <%listTime.forEach(function(time){%>
+                            <div id="timeline-set-2015-11" class="timeline-set-month">
+                                <h3 id="set-<%= time%>" class="timeline-month">
+                                    <a name="jump-<%= time%>" id="jump-<%= time%>" class="timeline-jump"><span><%= time%></span></a>
+                                </h3>
+                                <div class="set-month">
+                                    <%list[time].forEach(function(info){%>
+                                    <article class="post clearfix">
+                                        <div class="post-inner clearfix">
+                                            <!-- Title, post icon, post date -->
+                                            <span class="post-icon"></span>
+                                            <time datetime="2015-11-12" class="post-date" pubdate>
+                                                <span><%- moment(info.creattime).format("YYYY-MM-DD")%></span>
+                                            </time>
+
+                                            <h1 class="post-title">
+                                                <a href=""><%= info.title%></a>
+                                            </h1>
+                                            <!-- / Title, post icon, post date -->
+                                            <div class="post-content">
+                                                <p style="text-align: left;">
+                                                    <a href="">
+                                                        <img class="aligncenter" src="<%= info.thumbnail%>" />
+                                                    </a>
+                                                    淘宝店：<a href="">蜜搭复古文艺</a>
+                                                </p>
+                                                <p style="text-align: left;">
+                                                    去购买：<a href="">蜜搭秋冬复古气质千鸟格毛呢半身长裙</a>
+                                                </p>
+                                                <p class="post-meta">
+                                                    <span class="post-category"> 6,301人喜欢</span>
+                                                    <span class="post-comment">
+                                                        <a href="">No comments</a>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <!-- /.post-content -->
+                                            <div class="post-dot"></div><!-- /post-dot -->
+                                            <div class="post-arrow"></div><!-- /post-arrow -->
+                                        </div>
+                                        <!-- /.post-inner -->
+                                    </article>
+                                    <!-- /.post -->
+                                    <%})%>
+                                </div>
+                                <!-- /set-month -->
+                                <div class="inner-scroll-trigger inner-scroll-visible">
+                                    <a href="#" class="trigger-more">查看更多 <span class="date-placeholder-story"></span>故事</a>
+                                </div>
+                                <!-- /#scroll-set -->
+                            </div>
+                            <!-- /timeline-set-month -->
+                            <%})%>          
+                        </div>
+                        <!-- /timeline-content -->
+                    </div>
+                    <!-- /timeline-wrap -->
+                </div>
+                <!-- /loops-wrapper -->
+            </div>
+            <!-- /#content -->
+        </div>
+        <!-- /#layout -->
+    </div>
+    <!-- /body -->
+	
+    <%include inc/footer.html%>
+    
+</div>
+<!-- /#pagewrap -->
+</body>
+</html>
