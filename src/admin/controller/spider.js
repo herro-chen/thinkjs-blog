@@ -34,10 +34,6 @@ export default class extends Base {
       return Math.floor(Math.random() * 100000) + picSrc.substr(-4, 4);
     }
     
-    let gbkTOuft8 = function(string){
-      return string;
-    }
-    
     superagent.get(url)
       .set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36')
       .end(function(err, res){
@@ -47,17 +43,20 @@ export default class extends Base {
         let $ = cheerio.load(res.text);
         let items = [];
         let model = think.model("article", think.config("db"));
-        $('a[class="gitem"]').each(function(){
+        $('a[class="gitem"]').each(async function(){
           let href = 'http://meizit.com' + $(this).attr('href');
           let title = $(this).find('img').attr('title');
           let imgUrl = $(this).find('img').attr('src');
-          items.push({
-              title: title,
-              imgUrl: imgUrl,
-              href: href
-          });
+          let info = await model.where({soucre: href}).find();
+          if( ! info){
+            items.push({
+                title: title,
+                imgUrl: imgUrl,
+                href: href
+            });           
+          }
         })
-
+        
         let concurrencyCount = 0;
         let fetchUrl = function(item, callback){
           let startTime = new Date().getTime();
@@ -67,7 +66,7 @@ export default class extends Base {
               if(err){
                 return console.error(err);
               }
-
+              
               //处理文档
               let $ = cheerio.load(res.text);
               let content = $('.content').html();
@@ -90,12 +89,12 @@ export default class extends Base {
                             
               let info = {
                 'cateid': 0,
-                'title': gbkTOuft8(item.title),
+                'title': item.title,
                 'thumbnail': thumbnail,
-                'content': gbkTOuft8(content),
+                'content': content,
                 'soucre': item.href
               };
-
+              
               let delay = new Date().getTime() - startTime;
               console.log(item.title, '现在的并发数是' + concurrencyCount + '，正在抓取的是' + item.href + '，耗时' + delay + '毫秒');
               concurrencyCount--;
@@ -108,7 +107,7 @@ export default class extends Base {
           fetchUrl(item, callback);
         }, function(err, result){
           //入库
-          //model.addMany(result);
+          model.addMany(result);
           console.log('final:');
           console.log(result);
         }); 

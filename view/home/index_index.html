@@ -45,7 +45,7 @@
                         <div class="timeline-bar"></div><!-- /timeline-bar -->
                         <div class="timeline-start-dot"></div><!-- /timeline-start-dot -->
                         <div class="timeline-content">
-                            <%listTime.forEach(function(time){%>
+                            <%timeLine.listTime.forEach(function(time){%>
                             <div id="timeline-set-2015-11" class="timeline-set-month">
                                 <h3 id="set-<%= time%>" class="timeline-month">
                                     <a name="jump-<%= time%>" id="jump-<%= time%>" class="timeline-jump"><span><%= time%></span></a>
@@ -61,18 +61,14 @@
                                             </time>
 
                                             <h1 class="post-title">
-                                                <a href=""><%= info.title%></a>
+                                                <a href="/acticle/<%= info.id%>"><%= info.title%></a>
                                             </h1>
                                             <!-- / Title, post icon, post date -->
                                             <div class="post-content">
                                                 <p style="text-align: left;">
-                                                    <a href="">
+                                                    <a href="/acticle/<%= info.id%>">
                                                         <img class="aligncenter" src="<%= info.thumbnail%>" />
                                                     </a>
-                                                    淘宝店：<a href="">蜜搭复古文艺</a>
-                                                </p>
-                                                <p style="text-align: left;">
-                                                    去购买：<a href="">蜜搭秋冬复古气质千鸟格毛呢半身长裙</a>
                                                 </p>
                                                 <p class="post-meta">
                                                     <span class="post-category"> 6,301人喜欢</span>

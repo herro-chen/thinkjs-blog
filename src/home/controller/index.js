@@ -12,19 +12,31 @@ export default class extends Base {
   async indexAction(){
     //auto render template file index_index.html
     this.navType = "home";
-    let timeLine = await this.model("article").getTimeLine();
-    let article = await this.model("article").getList();
-    
-    let listTime = ["2015-11"];
-    let list = {
-      "2015-11": article.data
+    let cacheValue = await think.cache("cache_home", undefined);
+    if(cacheValue){
+      cacheValue.moment = moment;
+      this.assign(cacheValue);
+      return this.display();      
     }
-    this.assign({
+    
+    let model = this.model("article");
+    let timeLine = await model.getTimeLine();
+    let listTime = [];
+    let list = {};
+    for (let time of timeLine.listTime) {
+      let sql = "SELECT * FROM think_article WHERE DATE_FORMAT(creattime, \"%Y-%m\") = \"%s\" ORDER BY creattime DESC LIMIT 4";
+      sql = model.parseSql(sql, time);
+      list[time] = await model.query(sql);      
+    }
+    let value = {
       timeLine: timeLine,
-      listTime: listTime,
-      list: list,
-      moment: moment
-    });
+      list: list
+    };
+    think.cache("cache_home", value, {timeout: 600});
+    
+    value.moment = moment;
+    this.assign(value);
     return this.display();
   }
+
 }

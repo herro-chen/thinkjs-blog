@@ -54,6 +54,7 @@ export default class extends Base {
   async viewAction(){
     let id = this.get("id") ? this.get("id") : 0;
     let info = await this.model("article").getInfoByid(id);
+    if(think.isEmpty(info)) return think.statusAction(404, this.http);
     this.assign({
       info: info
     });

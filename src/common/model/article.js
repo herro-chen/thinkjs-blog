@@ -18,8 +18,9 @@ export default class extends think.model.base {
   
   async getTimeLine(){
     let list = await this.field("DATE_FORMAT(creattime, \"%Y-%m\") dates").group("dates").order("dates desc").limit(10).select();
-    let years = [], months = {};
+    let listTime = [], years = [], months = {};
     list.forEach(function(row){
+      listTime.push(row.dates);
       let time = row.dates.split('-');
       let year = time[0];
       let month = time[1];
@@ -32,6 +33,7 @@ export default class extends think.model.base {
       months[year].push(month);
     })
     let timeLine = {
+      listTime: listTime,
       years: years,
       months: months
     }
