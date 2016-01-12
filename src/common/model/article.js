@@ -16,6 +16,15 @@ export default class extends think.model.base {
     return this.where({id: id}).find();
   }
   
+  async getNeighbor(id){
+    let prev = await this.where({id: {"<": id}}).order("id desc").find();
+    let next = await this.where({id: {">": id}}).order("id asc").find();
+    return {
+      prev: prev,
+      next: next
+    }
+  }
+  
   async getTimeLine(){
     let list = await this.field("DATE_FORMAT(creattime, \"%Y-%m\") dates").group("dates").order("dates desc").limit(10).select();
     let listTime = [], years = [], months = {};

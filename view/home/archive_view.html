@@ -33,7 +33,7 @@
                         </h1>
                         <!-- / Title, post icon, post date -->
                         <div class="post-content">
-                            <%- info.content%>
+                            <p><%- info.content%></p>
                             <p class="post-meta">
                                 <span class="post-category"> 1,107人喜欢</span>
                                 <span class="post-comment">
@@ -44,16 +44,21 @@
                         <!-- /.post-content -->
 
                         <!-- post-nav -->
-                        <div class="post-nav clearfix"> 
+                        <div class="post-nav clearfix">
+                            <%if(neighbor.prev){%>
                             <span class="prev">
-                                <a href="" rel="prev">
-                                    <span class="arrow">&laquo;</span> 相对纶V领长袖纯色长款毛呢大衣
+                                <a href="/acticle/<%= neighbor.prev.id%>" rel="prev">
+                                    <span class="arrow">&laquo;</span> <%= neighbor.prev.title%>
                                 </a>
                             </span>
+                            <%}%>
+                            <%if(neighbor.next){%>
                             <span class="next">
-                                <a href="" rel="next">
-                                <span class="arrow">»</span> 相对纶千鸟格翻领长袖呢子大衣</a>
-                            </span>                            
+                                <a href="/acticle/<%= neighbor.next.id%>" rel="next">
+                                    <span class="arrow">»</span> <%= neighbor.next.title%>
+                                </a>
+                            </span>
+                            <%}%>
                         </div>
                         <!-- /post-nav -->
                         

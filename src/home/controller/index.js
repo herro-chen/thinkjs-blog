@@ -21,10 +21,9 @@ export default class extends Base {
     
     let model = this.model("article");
     let timeLine = await model.getTimeLine();
-    let listTime = [];
     let list = {};
     for (let time of timeLine.listTime) {
-      let sql = "SELECT * FROM think_article WHERE DATE_FORMAT(creattime, \"%Y-%m\") = \"%s\" ORDER BY creattime DESC LIMIT 4";
+      let sql = "SELECT id, title, thumbnail, creattime FROM think_article WHERE DATE_FORMAT(creattime, \"%Y-%m\") = \"%s\" ORDER BY creattime DESC LIMIT 4";
       sql = model.parseSql(sql, time);
       list[time] = await model.query(sql);      
     }
@@ -32,7 +31,7 @@ export default class extends Base {
       timeLine: timeLine,
       list: list
     };
-    think.cache("cache_home", value, {timeout: 600});
+    think.cache("cache_home", value, {timeout: 60});
     
     value.moment = moment;
     this.assign(value);

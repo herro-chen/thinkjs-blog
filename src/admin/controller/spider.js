@@ -17,21 +17,30 @@ export default class extends Base {
    */
   async indexAction(){
     
+    let year = moment(new Date).format("YYYY");
+    let month = moment(new Date).format("MM");
+    let date = moment(new Date).format("DD");
+    
+    return this.success();
+    year = '2016';
+    month = '01';
+    date = '11';
+    
     //本地存储目录
-    let path = '/static/upload/' + moment(new Date).format("YYYY") + '/' + moment(new Date).format("MM") + '/';
+    let path = '/static/upload/' + year + '/' + month + '/';
     let dir = './www/' + path;    
     mkdirp(dir, function(err){
       if(err) console.log(err);
     });
     
-    let url = 'http://meizit.com/home/index/index/p/10';//最后一次
+    let url = 'http://meizit.com/home/index/index/p/1';//最后一次
     let download = function(url, dir, filename){
       let stream = fs.createWriteStream(dir + filename);
       return superagent.get(url).pipe(stream);
     }
     
     let setName = function(picSrc){
-      return Math.floor(Math.random() * 100000) + picSrc.substr(-4, 4);
+      return date + new Date().getTime() + Math.floor(Math.random() * 100000) + picSrc.substr(-4, 4);
     }
     
     superagent.get(url)
@@ -43,18 +52,15 @@ export default class extends Base {
         let $ = cheerio.load(res.text);
         let items = [];
         let model = think.model("article", think.config("db"));
-        $('a[class="gitem"]').each(async function(){
+        $('a[class="gitem"]').each(function(){
           let href = 'http://meizit.com' + $(this).attr('href');
           let title = $(this).find('img').attr('title');
           let imgUrl = $(this).find('img').attr('src');
-          let info = await model.where({soucre: href}).find();
-          if( ! info){
-            items.push({
-                title: title,
-                imgUrl: imgUrl,
-                href: href
-            });           
-          }
+          items.push({
+              title: title,
+              imgUrl: imgUrl,
+              href: href
+          });
         })
         
         let concurrencyCount = 0;
@@ -70,7 +76,6 @@ export default class extends Base {
               //处理文档
               let $ = cheerio.load(res.text);
               let content = $('.content').html();
-              console.log(content);
               let thumbnailName = setName(item.imgUrl);
               
               download(item.imgUrl, dir, thumbnailName);//下载缩略图片
@@ -92,7 +97,8 @@ export default class extends Base {
                 'title': item.title,
                 'thumbnail': thumbnail,
                 'content': content,
-                'soucre': item.href
+                'soucre': item.href,
+                'creattime': year + '-' + month + '-' + date + ' 00:00:00'
               };
               
               let delay = new Date().getTime() - startTime;
