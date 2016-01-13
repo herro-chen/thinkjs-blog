@@ -1,0 +1,16 @@
+<rss version="2.0">
+    <channel>
+        <title>猫女</title>
+        <link>http://ss.catcat.club</link>
+        <language>zh-cn</language>
+        <description>猫女</description>
+        <%article.forEach(function(item){%>
+        <item>
+            <title><%= item.title%></title>
+            <link><%= item.id%></link>
+            <description><%= item.content%></description>
+            <pubDate><%= item.creattime%></pubDate>
+        </item>
+        <%})%>
+    </channel>
+</rss>    

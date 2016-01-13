@@ -35,27 +35,28 @@
                     <h3 class="category-section-title"><a href="http://www.zhuige.com/category/manshenghuo" title="查看更多日志">慢生活</a></h3>
                     <!-- loops-wrapper -->
                     <div class="loops-wrapper infinite-scrolling">
+                        <%list.forEach(function(info){%>
                         <article class="post clearfix">
                             <div class="post-inner">
                                 <!-- Title, post icon, post date -->
                                 <span class="post-icon"></span>
                                 <time datetime="2014-06-15" class="post-date" pubdate>
-                                    <span>六 15, 2014</span>
+                                    <span><%- moment(info.creattime).format("YYYY-MM-DD")%></span>
                                 </time>
 
-                                <h1 class="post-title"><a href="http://www.zhuige.com/manshenghuo/4055.html">创意国旗早餐是否要来一份</a></h1>
+                                <h1 class="post-title"><a href="/acticle/<%= info.id%>"><%= info.title%></a></h1>
                                 <!-- / Title, post icon, post date -->
 
                                 <figure class="post-image ">
-                                <a href="http://www.zhuige.com/manshenghuo/4055.html"><img src='http://www.zhuige.com/wp-content/themes/zhui/themify/img.php?src=http://www.zhuige.com/wp-content/uploads/2014/06/6608896113724481772.jpg&amp;w=325&amp;h=&amp;a=c' alt='创意国旗早餐是否要来一份' class=' '  width='325'  /></a>
+                                    <a href=""><img src="<%= info.thumbnail%>" alt="<%- moment(info.creattime).format("YYYY-MM-DD")%>" /></a>
                                 </figure>
 
                                 <div class="post-content">
-                                    <p>使用各国的特色食物装点成该国的国旗，颇有意思，你能说出其中几个国家的名字呢？</p>
                                     <p class="post-meta">
-                                    <span class="post-category"> 1,499人喜欢</span>
-                                    <span class="post-comment">
-                                    <a href="http://www.zhuige.com/manshenghuo/4055.html#respond" title="《创意国旗早餐是否要来一份》上的评论">No comments</a>					</span>
+                                        <span class="post-category"> 1,499人喜欢</span>
+                                        <span class="post-comment">
+                                            <a href="" title="<%= info.title%>上的评论">No comments</a>					
+                                        </span>
                                     </p>
                                 </div>
                                 <!-- /.post-content -->
@@ -65,46 +66,13 @@
                             <!-- /.post-inner -->
                         </article>
                         <!-- /.post -->
-                        
-                        <article class="post clearfix">
-                            <div class="post-inner">
-                                <!-- Title, post icon, post date -->
-                                <span class="post-icon"></span>
-                                <time datetime="2014-06-15" class="post-date" pubdate>
-                                    <span>六 15, 2014</span>
-                                </time>
-
-                                <h1 class="post-title"><a href="http://www.zhuige.com/manshenghuo/4055.html">创意国旗早餐是否要来一份</a></h1>
-                                <!-- / Title, post icon, post date -->
-
-                                <figure class="post-image ">
-                                <a href="http://www.zhuige.com/manshenghuo/4055.html"><img src='http://www.zhuige.com/wp-content/themes/zhui/themify/img.php?src=http://www.zhuige.com/wp-content/uploads/2014/06/6608896113724481772.jpg&amp;w=325&amp;h=&amp;a=c' alt='创意国旗早餐是否要来一份' class=' '  width='325'  /></a>
-                                </figure>
-
-                                <div class="post-content">
-                                    <p>使用各国的特色食物装点成该国的国旗，颇有意思，你能说出其中几个国家的名字呢？</p>
-                                    <p class="post-meta">
-                                    <span class="post-category"> 1,499人喜欢</span>
-                                    <span class="post-comment">
-                                    <a href="http://www.zhuige.com/manshenghuo/4055.html#respond" title="《创意国旗早餐是否要来一份》上的评论">No comments</a>					</span>
-                                    </p>
-                                </div>
-                                <!-- /.post-content -->
-                                <div class="post-dot"></div><!-- /post-dot -->
-                                <div class="post-arrow"></div><!-- /post-arrow -->
-                            </div>
-                            <!-- /.post-inner -->
-                        </article>
-                        <!-- /.post -->
+                        <%})%>
                     </div>
                     <!-- /loops-wrapper -->
                 </div>
                 <!-- /category-section -->
                 <div class="pagenav clearfix">
-                    <span class="number current">1</span>  
-                    <a href="/page/2" class="number">2</a>  
-                    <a href="/page/3" class="number">3</a>
-                    <a href="/page/26" title="&raquo;" class="number">&raquo;</a>
+                    <%- links%>
                 </div>
             </div>
             <!-- /content -->
