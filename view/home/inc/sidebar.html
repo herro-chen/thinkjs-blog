@@ -4,59 +4,24 @@
                     
                 </div>           
                 <div id="rounded-tag-cloud" class="widget rounded_tag_cloud_widget">
-                    <h4 class="widgettitle">追格热荐</h4>
+                    <h4 class="widgettitle">专题热荐</h4>
                     <div class="rtc-div">
-                        <a href="/tag/souline">Souline</a>
-                        <a href="/tag/t%e6%81%a4">T恤</a>
-                        <a href="/tag/%e4%b9%94%e4%b8%a2%e4%b8%a2">乔丢丢</a>
-                        <a href="/tag/%e5%88%9d%e8%af%ad">初语</a>
-                        <a href="/tag/%e5%a4%8d%e5%8f%a4">复古</a>
-                        <a href="/tag/%e5%ae%bf%e6%9c%ac">宿本</a>
-                        <a href="/tag/%e5%b0%8f%e6%b8%85%e6%96%b0">小清新</a>
-                        <a href="/tag/%e5%b0%ba%e6%b8%a1">尺渡</a>
-                        <a href="/tag/%e5%b8%83%e5%b8%83%e5%b0%8f%e9%95%87">布布小镇</a>
-                        <a href="/tag/%e6%96%87%e8%89%ba">文艺</a>
-                        <a href="/tag/%e6%96%87%e8%89%ba%e8%8c%83">文艺范</a>
-                        <a href="/tag/%e6%97%a5%e7%b3%bb">日系</a>
-                        <a href="/tag/%e6%9c%89%e8%80%b3">有耳</a>
-                        <a href="/tag/%e6%a3%89%e9%ba%bb">棉麻</a>
-                        <a href="/tag/%e6%a3%ae%e5%a5%b3">森女</a>
-                        <a href="/tag/%e6%a3%ae%e5%a5%b3%e7%b3%bb">森女系</a>
-                        <a href="/tag/%e6%a3%ae%e5%ae%bf">森宿</a>
-                        <a href="/tag/%e6%a3%ae%e6%9e%97%e7%b3%bb">森林系</a>
-                        <a href="/tag/%e6%ad%a5%e5%b1%a5%e4%b8%8d%e5%81%9c">步履不停</a>
-                        <a href="/tag/%e6%af%9b%e8%a1%a3">毛衣</a>
-                        <a href="/tag/%e6%b0%91%e6%97%8f%e9%a3%8e">民族风</a>
-                        <a href="/tag/%e6%b8%85%e6%96%b0">清新</a>
-                        <a href="/tag/%e7%94%9c%e7%be%8e">甜美</a>
-                        <a href="/tag/%e7%a9%ba%e6%b0%94%e7%8c%ab">空气猫</a>
-                        <a href="/tag/%e7%b4%a0%e7%bc%95">素缕</a>
-                        <a href="/tag/%e7%be%8a%e6%af%9b%e4%b8%8e%e8%8a%b1">羊毛与花</a>
-                        <a href="/tag/%e8%8c%b5%e6%9b%bc">茵曼</a>
-                        <a href="/tag/%e8%a1%ac%e8%a1%ab">衬衫</a>
-                        <a href="/tag/%e8%bf%9e%e8%a1%a3%e8%a3%99">连衣裙</a>
-                        <a href="/tag/%e9%9f%a9%e7%89%88">韩版</a>
+                        <%tagCloud.forEach(function(tag){%>
+                        <a href="/tag/<%= tag.name%>"><%= tag.name%></a>
+                        <%})%>
                     </div>
                 </div>
                 <div id="themify-feature-posts-2" class="widget feature-posts">
-                    <h4 class="widgettitle">最新潮品</h4>
+                    <h4 class="widgettitle">最新分享</h4>
                     <ul class="feature-posts-list">
+                        <%newList.forEach(function(info){%>                     
                         <li>
-                            <a href=""><img src="http://www.zhuige.com/wp-content/uploads/2015/11/QQ20151115-2.png" class="post-img" width="50px"  /></a>
-                            <a href="" class="feature-posts-title">相对纶千鸟格翻领长袖呢子大衣</a>
+                            <a href="/acticle/<%= info.id%>">
+                                <img src="<%= config.staticUrl(info.thumbnail)%>" class="post-img" width="50px"  />
+                            </a>
+                            <a href="/acticle/<%= info.id%>" class="feature-posts-title"><%= info.title%></a>
                         </li>
-                        <li>
-                            <a href=""><img src="http://www.zhuige.com/wp-content/uploads/2015/11/QQ20151115-1.png" class="post-img" width="50px"  /></a><a href="" class="feature-posts-title">相对纶V领长袖纯色长款毛呢大衣</a>
-                        </li>
-                        <li>
-                            <a href=""><img src="http://www.zhuige.com/wp-content/uploads/2014/09/QQ20140928-1.png" class="post-img" width="50px"  /></a><a href="" class="feature-posts-title">蜜搭秋冬复古气质千鸟格毛呢半身长裙</a>
-                        </li>
-                        <li>
-                            <a href=""><img src="http://www.zhuige.com/wp-content/uploads/2014/10/QQ20141012-1.png" class="post-img" width="50px"  /></a><a href="" class="feature-posts-title">尺渡秋装日系学院风连帽羊毛开衫</a>
-                        </li>
-                        <li>
-                            <a href=""><img src="http://www.zhuige.com/wp-content/uploads/2014/11/QQ20141113-31.png" class="post-img" width="50px"  /></a><a href="" class="feature-posts-title">OPT新款复古文艺范小清新V领毛衣</a>
-                        </li>
+                        <%})%>
                     </ul>
                 </div>
             </aside>

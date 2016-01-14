@@ -3,6 +3,14 @@
 import Base from './base.js';
 
 export default class extends Base {
+  async __before(){
+    let tagCloud = await this.model("taxonomy").getHotTag();
+    let newList = await this.model("article").getNewList();
+    this.assign({
+      "tagCloud": tagCloud,
+      "newList": newList
+    });
+  }  
   /**
    * index action
    * @return {Promise} []
@@ -12,8 +20,9 @@ export default class extends Base {
     return this.aboutAction();
   }
   
-  aboutAction(){
+  async aboutAction(){
     this.navType = "about";
+    this.tagCloud = await this.model("taxonomy").getHotTag();
     this.assign({
       title: "关于猫女",
       content: '<p><span style="color:#5c5c5c;">一直以来，我们想打造这样一个产品，她简单，干净，聪明，熟悉每个用户的脾气和喜好。她知道你是<a href=""><span style="color: #5c5c5c;">森女</span></a>，崇尚简单。她知道你是<a href=""><span style="color: #5c5c5c;">萝莉</span></a>，追求可爱。她知道你是OL，要正式优雅……心情不好了，她会展示给你一个可爱萌物，让你开怀一笑。有约会了，她会为你准备一套完美穿搭，让你幸福如花。</span></p>\

@@ -16,6 +16,10 @@ export default class extends think.model.base {
     return this.where({id: id}).find();
   }
   
+  getNewList(){
+    return this.order("creattime desc").limit(5).select();
+  }
+  
   async getNeighbor(id){
     let prev = await this.where({id: {"<": id}}).order("id desc").find();
     let next = await this.where({id: {">": id}}).order("id asc").find();

@@ -1637,6 +1637,9 @@ FOOTER
 /* back to top */
 .back-top {
 	margin: 0;
+    position: fixed; 
+    bottom: 50px;
+    z-index:9999999
 }
 .back-top a {
 	background: #5e6164 url(images/arrow-up.png) no-repeat center center;
@@ -1792,7 +1795,7 @@ GALLERY
 #body .gallery-columns-7 .gallery-item,
 #body .gallery-columns-8 .gallery-item,
 #body .gallery-columns-9 .gallery-item {
-	margin-right: 0;
+	margin-right: 0.9%;
 }
 
 /* clear gallery item margin-right */

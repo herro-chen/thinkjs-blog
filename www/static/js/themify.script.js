@@ -279,19 +279,6 @@ var ThemifyTimeLine = {
 	        $container.isotope('insert', $newElems).isotope('reLayout'); // use method insert
 	        jQuery(window).resize();
 
-	        jQuery('.post-image .lightbox', $newElems).prepend('<span class="zoom"></span>'); // prepend zoom icon
-
-			    // recall pretty photo
-			    if( jQuery("a[rel^='prettyPhoto']", $newElems).length > 0 && (typeof(jQuery.fn.prettyPhoto) !== 'undefined') ){
-			    	jQuery("a[rel^='prettyPhoto']", $newElems).prettyPhoto({
-						social_tools : false,
-						deeplinking: false, overlay_gallery: false,
-						// To customize theme, use 'themify_overlay_gallery_theme' filter hook
-						// Use light_rounded / pp_default / light_square / dark_rounded / dark_square / facebook
-						theme : themifyScript.overlayTheme
-					});
-			    }
-
 					jQuery(self.config.loadMore).removeClass('main-load-more-disabled');
 			    jQuery('.loader-' + parentId).remove();
 			    jQuery(self.config.triggerMore).removeClass('inner-loader-disabled');

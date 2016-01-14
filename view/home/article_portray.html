@@ -1,15 +1,7 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>猫女</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-
-<link rel="stylesheet" href="/static/css/style.css" type="text/css" />
-<link rel="stylesheet" href="/static/css/media-queries.css" type="text/css" />
-
+<%include inc/header-meta.html%>
 </head>
 <body class="page sidebar1 grid2">
 <div id="pagewrap">
@@ -32,7 +24,7 @@
 
                 <!-- category-section -->
                 <div class="category-section clearfix">
-                    <h3 class="category-section-title"><a href="http://www.zhuige.com/category/manshenghuo" title="查看更多日志">慢生活</a></h3>
+                    <h3 class="category-section-title"><a href="/portray/<%= taxonomy.slug%>" title="<%= taxonomy.name%>"><%= taxonomy.name%></a></h3>
                     <!-- loops-wrapper -->
                     <div class="loops-wrapper infinite-scrolling">
                         <%list.forEach(function(info){%>
@@ -48,7 +40,7 @@
                                 <!-- / Title, post icon, post date -->
 
                                 <figure class="post-image ">
-                                    <a href=""><img src="<%= info.thumbnail%>" alt="<%- moment(info.creattime).format("YYYY-MM-DD")%>" /></a>
+                                    <a href=""><img src="<%= config.staticUrl(info.thumbnail)%>" alt="<%- moment(info.creattime).format("YYYY-MM-DD")%>" /></a>
                                 </figure>
 
                                 <div class="post-content">
@@ -60,8 +52,6 @@
                                     </p>
                                 </div>
                                 <!-- /.post-content -->
-                                <div class="post-dot"></div><!-- /post-dot -->
-                                <div class="post-arrow"></div><!-- /post-arrow -->
                             </div>
                             <!-- /.post-inner -->
                         </article>

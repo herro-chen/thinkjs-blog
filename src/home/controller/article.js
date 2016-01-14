@@ -1,19 +1,37 @@
 'use strict';
 
 import moment from 'moment';
+import cheerio from "cheerio";
 
 import Base from './base.js';
 
 export default class extends Base {
+  
+  async __before(){
+    let tagCloud = await this.model("taxonomy").getHotTag();
+    let newList = await this.model("article").getNewList();
+    this.assign({
+      "tagCloud": tagCloud,
+      "newList": newList
+    });
+  }
   /**
    * index action
    * @return {Promise} []
    */
   indexAction(){
     //auto render template file index_index.html
-    return this.display();
+    return this.topicAction();
   }
-  
+
+  /**
+   * topic action
+   * @return {Promise} []
+   */  
+  async tagAction(){
+    return this.topicAction();
+  }
+    
   /**
    * topic action
    * @return {Promise} []
@@ -99,13 +117,16 @@ export default class extends Base {
     let getPage = this.get("page") ? this.get("page") : 1;
     let slug = this.get("slug") ? this.get("slug") : '';
 
-    let article, baseUrl, parentId;
+    let taxonomy, article, baseUrl, parentId;
     if (slug){
-      let taxonomy = await this.model("taxonomy").getInfoBySlug(slug);
+      taxonomy = await this.model("taxonomy").getInfoBySlug(slug);
       if (think.isEmpty(taxonomy)) return think.statusAction(404, this.http);
-      parentId = taxonomy.id 
+      parentId = taxonomy.id;
+      baseUrl = '/portray/' + slug + '/';
     } else {
-      parentId = 4;
+      taxonomy = await this.model("taxonomy").getInfoBySlug('portray');
+      parentId = taxonomy.id;
+      baseUrl = '/portray/';
     }
     
     //获取子分类
@@ -134,6 +155,7 @@ export default class extends Base {
     let links = pagination.initialize(pageConf).createLinks();
     
     this.assign({
+      taxonomy: taxonomy,
       list: article.data,
       links: links,
       moment: moment
@@ -145,18 +167,47 @@ export default class extends Base {
    * magazine action
    * @return {Promise} []
    */
-  magazineAction(){
+  async magazineAction(){
     this.navType = "magazine";
+    let getPage = this.get("page") ? this.get("page") : 1;
+    
+    let where = {
+      "think_relationships.taxonomy_id" : 5
+    };
+    let article = await this.model("relationships").getList(where, '', getPage, 10);
+    
+    let articleIds = [];
+    let metas = {};
+    article.data.forEach(function(item){
+      articleIds.push(item.id);
+      metas[item.id] = {};
+    })
+    
+    let metaList = await this.model("article_meta").getInfoByAid({IN : articleIds});
+    
+    
+    metaList.forEach(function(meta){
+      metas[meta.article_id][meta.meta_key] = meta.meta_value;
+    })
+    console.log(metas);
+    
+    let pageConf = {
+      totalPages: article.totalPages,
+      numsPerPage: article.numsPerPage,
+      currentPage: article.currentPage,
+      baseUrl: '/magazine/'
+    }
+    let paginationService = think.service("pagination");
+    let pagination = new paginationService();
+    let links = pagination.initialize(pageConf).createLinks();
+    this.assign({
+      metas: metas,
+      list: article.data,
+      links: links,
+      moment: moment
+    });    
     return this.display();
   }
-  
-  /**
-   * topic action
-   * @return {Promise} []
-   */  
-  async tagAction(){
-    return this.display();
-  }  
   
   /**
    * rss action
@@ -180,11 +231,29 @@ export default class extends Base {
     let info = await this.model("article").getInfoByid(id);
     if(think.isEmpty(info)) return think.statusAction(404, this.http);
     
+    //获取meta
+    let metaList = await this.model("article_meta").getInfoByAid(id);
+    let metas = {};
+    metaList.forEach(function(meta){
+      metas[meta.meta_key] = meta.meta_value;
+    })
+    
+    //替换内容图片路径
+    let $ = cheerio.load(info.content);
+    let staticUrl = this.config('staticUrl');
+    $('img').each(function(){
+      let picSrc = $(this).attr('src');      
+      let picPath = staticUrl(picSrc);
+      //替换文章图片路径
+      info.content = info.content.replace(picSrc, picPath);
+    })
+    
     //获取前后文章;
     let neighbor = await this.model("article").getNeighbor(id);
     
     this.assign({
       info: info,
+      metas: metas,
       neighbor: neighbor
     });
     return this.display();

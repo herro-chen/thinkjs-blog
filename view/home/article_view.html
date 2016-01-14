@@ -33,6 +33,20 @@
                         </h1>
                         <!-- / Title, post icon, post date -->
                         <div class="post-content">
+                            <%if(metas.gallery){%>
+                            <div class="gallery gallery-columns-6 gallery-size-thumbnail">
+                                <%eval(metas.gallery).forEach(function(gallery){%>
+                                <dl class="gallery-item">
+                                    <dt class="gallery-icon">
+                                        <a href="" title="">
+                                            <img src="<%= config.staticUrl(gallery)%>" class="attachment-thumbnail" alt="">
+                                        </a>
+                                    </dt>
+                                </dl>
+                                <%})%>
+                                <br style="clear: both">
+                            </div>
+                            <%}%>
                             <p><%- info.content%></p>
                             <p class="post-meta">
                                 <span class="post-category"> 1,107人喜欢</span>
