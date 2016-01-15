@@ -7,14 +7,9 @@ import Base from './base.js';
 
 export default class extends Base {
   
-  async __before(){
-    let tagCloud = await this.model("taxonomy").getHotTag();
-    let newList = await this.model("article").getNewList();
-    this.assign({
-      "tagCloud": tagCloud,
-      "newList": newList
-    });
-  }
+  init(http){
+    super.init(http);
+  }  
   /**
    * index action
    * @return {Promise} []
@@ -23,9 +18,44 @@ export default class extends Base {
     //auto render template file index_index.html
     return this.topicAction();
   }
-
+  
   /**
-   * topic action
+   * search action
+   * @return {Promise} []
+   */  
+  async searchAction(){
+    let keyword = this.get("keyword");
+    if( ! keyword) return think.statusAction(404, this.http);
+    let getPage = this.get("page") ? this.get("page") : 1;
+    
+    let article = await this.model("article").where({title: ["like", "%"+ keyword +"%"]}).order("creattime DESC").page(getPage, 20).countSelect();
+    
+    let pageConf = {
+      totalPages: article.totalPages,
+      numsPerPage: article.numsPerPage,
+      currentPage: article.currentPage,
+      baseUrl: '/search?keyword=' + keyword + '&page='
+    }
+    let paginationService = think.service("pagination");
+    let pagination = new paginationService();
+    let links = pagination.initialize(pageConf).createLinks();
+    
+    let taxonomy = {
+      slug: keyword,
+      name: keyword
+    };
+
+    this.assign({
+      taxonomy: taxonomy,
+      list: article.data,
+      links: links,
+      moment: moment
+    });
+    return this.display("portray");    
+  }
+  
+  /**
+   * tag action
    * @return {Promise} []
    */  
   async tagAction(){
@@ -41,7 +71,7 @@ export default class extends Base {
     let where = {};
     let getPage = this.get("page") ? this.get("page") : 1;
     let tag = this.get("tag") ? this.get("tag") : '';
-
+    console.log(getPage);
     let article, baseUrl;
     if (tag){
       let taxonomy = await this.model("taxonomy").getInfoByTag(tag);

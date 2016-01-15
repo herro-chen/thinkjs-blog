@@ -6,14 +6,9 @@ import Base from './base.js';
 
 export default class extends Base {
   
-  async __before(){
-    let tagCloud = await this.model("taxonomy").getHotTag();
-    let newList = await this.model("article").getNewList();
-    this.assign({
-      "tagCloud": tagCloud,
-      "newList": newList
-    });
-  }
+  init(http){
+    super.init(http);
+  }  
   /**
    * index action
    * @return {Promise} []

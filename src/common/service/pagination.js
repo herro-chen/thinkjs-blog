@@ -9,17 +9,17 @@ export default class extends think.service.base {
     super.init(...args);
   }
   
-  initialize(config){
-    this.config = config;
+  initialize(pageConfig){
+    this.pageConfig = pageConfig;
     return this;
   }
   
   createLinks(){
-    let config = this.config;
-    let totalPages = config.totalPages;
+    let pageConfig = this.pageConfig;
+    let totalPages = pageConfig.totalPages;
     if(totalPages <= 1) return '';
-    let numsPerPage = config.numsPerPage ? config.numsPerPage : 10;
-    let currentPage = config.currentPage ? config.currentPage : 1;
+    let numsPerPage = pageConfig.numsPerPage ? pageConfig.numsPerPage : 10;
+    let currentPage = pageConfig.currentPage ? pageConfig.currentPage : 1;
     let pages = [];
     let nextPage = currentPage;
     let i = 5;
@@ -34,8 +34,9 @@ export default class extends think.service.base {
       pages.unshift(prevPage);
       i = i - 1;      
     }
-    let baseUrl = config.baseUrl;//构造路径
+    let baseUrl = pageConfig.baseUrl;//构造路径
     let links = '<a href="'+ baseUrl +'1" title="&laquo;" class="number">&laquo;</a>';
+    if(currentPage != 1) links += '<a href="'+ baseUrl + (currentPage - 1) + '" title="prev" class="number">&lt;</a>';
     pages.forEach(function(page){
       if(page == currentPage){
         links += '<span class="number current">'+ page +'</span>';
@@ -43,6 +44,7 @@ export default class extends think.service.base {
         links += ' <a href="'+ baseUrl + page +'" class="number">'+ page +'</a>';
       }
     })
+    if(currentPage != totalPages) links += '<a href="'+ baseUrl + (currentPage + 1) + '" title="next" class="number">&gt;</a>';
     links += '<a href="'+ baseUrl + totalPages +'" title="&raquo;" class="number">&raquo;</a>';
     return links;
   }
