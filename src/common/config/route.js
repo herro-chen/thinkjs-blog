@@ -17,4 +17,9 @@ export default [
   [/^portray\/([1-9]([0-9]+)?)$/, "home/article/portray?page=:1"],
   ["portray", "home/article/portray"],
   [/^acticle\/([1-9]([0-9]+)?)$/, "home/article/view?id=:1"],
+  
+  [/^admin\/article\/index\/([1-9]([0-9]+)?)$/, "admin/article/index?page=:1"],
+  [/^admin\/article\/edit\/([1-9]([0-9]+)?)$/, "admin/article/edit?id=:1"],
+  [/^admin\/taxonomy\/index\/([1-9]([0-9]+)?)$/, "admin/taxonomy/index?page=:1"],
+  
 ];

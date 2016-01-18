@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%include inc/header-meta.html%>    
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <%include inc/header.html%>
+      
+      <%include inc/left.html%>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Dashboard
+            <small>Version 2.0</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">文档</li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Main row -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">文档 修改</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                <form role="form" method="post">
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label for="title">标题</label>
+                          <input type="text" class="form-control" id="title" name="title" value="<%= info.title%>" placeholder="标题">
+                        </div>
+                        <div class="form-group">
+                          <label for="thumbnail">缩略图</label>
+                          <input type="hidden" name="thumbnail" value="<%= info.thumbnail%>">
+                          <input type="file" id="thumbnail">
+                          <p class="help-block">上传图片</p>
+                        </div>
+                        <div class="form-group">
+                          <label>简介</label>
+                          <textarea class="form-control" rows="3" name="description" placeholder="简介"><%= info.description%></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label>内容</label>
+                          <textarea id="textarea" name="content" rows="10" cols="80">
+                            <%= info.content%>
+                          </textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="form-group">
+                            <label>分类</label>
+                            <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" name="cates">
+                              <%cates.forEach(function(cate){%>
+                              <option value="<%= cate.id%>" <%if(info.cates.indexOf(cate.id) !== -1){%>selected<%}%> ><%= cate.name%></option>
+                              <%})%>
+                            </select>
+                          </div><!-- /.form-group -->
+                          <div class="form-group">
+                            <label>标签</label>
+                            <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" name="tags">
+                              <%tags.forEach(function(tag){%>
+                              <option value="<%= tag.id%>" <%if(info.tags.indexOf(tag.id) !== -1){%>selected<%}%>><%= tag.name%></option>
+                              <%})%>
+                            </select>
+                          </div><!-- /.form-group -->
+                          <div class="form-group">
+                            <label>标签</label>
+                            
+                          </div><!-- /.form-group -->                          
+                      </div>
+                    </div>
+                  </div><!-- /.box-body -->
+
+                  <div class="box-footer">
+                    <input type="hidden" name="id" value="<%= info.id%>">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>  
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div>
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <%include inc/footer.html%>
+
+      <%include inc/right.html%>
+
+    </div><!-- ./wrapper -->
+
+    <%include inc/footer-script.html%>
+    <!-- CK Editor -->
+    <script src="<%=config.staticUrl("/static/plugins/ckeditor/ckeditor.js")%>"></script>
+    <script src="<%=config.staticUrl("/static/plugins/select2/select2.full.min.js")%>"></script>
+    <script>
+      $(function () {
+        CKEDITOR.replace('textarea');
+        $(".select2").select2();
+      });
+    </script>
+  </body>
+</html>

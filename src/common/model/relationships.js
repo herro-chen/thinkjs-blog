@@ -13,4 +13,12 @@ export default class extends think.model.base {
     return this.join("LEFT JOIN think_article ON think_article.id = think_relationships.article_id").where(where).order(order).page(page, offset).countSelect();
   }
   
+  getAllByAid(article_id){
+    return this.where({article_id: article_id}).select();
+  }
+  
+  getTaxonomyByAid(article_id){
+    return this.join("LEFT JOIN think_taxonomy ON think_taxonomy.id = think_relationships.taxonomy_id").where({"think_relationships.article_id": article_id}).select();
+  }
+  
 }

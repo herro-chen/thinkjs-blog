@@ -20,6 +20,8 @@ export default class extends think.service.base {
     if(totalPages <= 1) return '';
     let numsPerPage = pageConfig.numsPerPage ? pageConfig.numsPerPage : 10;
     let currentPage = pageConfig.currentPage ? pageConfig.currentPage : 1;
+    let tagOpen = pageConfig.tagOpen ? pageConfig.tagOpen : "";
+    let tagClose = pageConfig.tagClose ? pageConfig.tagClose : "";
     let pages = [];
     let nextPage = currentPage;
     let i = 5;
@@ -35,17 +37,17 @@ export default class extends think.service.base {
       i = i - 1;      
     }
     let baseUrl = pageConfig.baseUrl;//构造路径
-    let links = '<a href="'+ baseUrl +'1" title="&laquo;" class="number">&laquo;</a>';
-    if(currentPage != 1) links += '<a href="'+ baseUrl + (currentPage - 1) + '" title="prev" class="number">&lt;</a>';
+    let links = tagOpen + '<a href="'+ baseUrl +'1" title="&laquo;" class="number">&laquo;</a>' + tagClose;
+    if(currentPage != 1) links += tagOpen + '<a href="'+ baseUrl + (currentPage - 1) + '" title="prev" class="number">&lt;</a>' + tagClose;
     pages.forEach(function(page){
       if(page == currentPage){
-        links += '<span class="number current">'+ page +'</span>';
+        links += tagOpen + '<span class="number current">'+ page +'</span>' + tagClose;
       }else{
-        links += ' <a href="'+ baseUrl + page +'" class="number">'+ page +'</a>';
+        links += tagOpen + ' <a href="'+ baseUrl + page +'" class="number">'+ page +'</a>' + tagClose;
       }
     })
-    if(currentPage != totalPages) links += '<a href="'+ baseUrl + (currentPage + 1) + '" title="next" class="number">&gt;</a>';
-    links += '<a href="'+ baseUrl + totalPages +'" title="&raquo;" class="number">&raquo;</a>';
+    if(currentPage != totalPages) links += tagOpen + '<a href="'+ baseUrl + (currentPage + 1) + '" title="next" class="number">&gt;</a>' + tagClose;
+    links += tagOpen + '<a href="'+ baseUrl + totalPages +'" title="&raquo;" class="number">&raquo;</a>' + tagClose;
     return links;
   }
   

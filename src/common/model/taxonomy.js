@@ -5,6 +5,18 @@
  */
 export default class extends think.model.base {
 
+  getList(where, order, page, offset){
+    if( ! where) where = {};
+    if( ! order) order = {id: "desc"};
+    if( ! page) page = 1;
+    if( ! offset) offset = 10;
+    return this.where(where).order(order).page(page, offset).countSelect();
+  }
+  
+  getAllCate(){
+    return this.where({type: 1}).select();
+  }
+  
   getInfoByTag(tag){
     return this.where({name: tag, type: 2}).find();
   }
