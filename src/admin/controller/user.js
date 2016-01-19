@@ -7,10 +7,6 @@ export default class extends Base {
    * index action
    * @return {Promise} []
    */
-  init(http){
-    super.init(http);
-  }
-  
   async indexAction(){
     
     this.leftNav = "user";
@@ -39,6 +35,44 @@ export default class extends Base {
       links: links
     });    
     this.display();
+  }
+  
+  async editAction(){
+    
+    this.leftNav = "user";
+    
+    let userModel = this.model("user");
+    
+    if(this.isPost()){
+      
+      let id = this.post('id');
+ 
+      let editInfo = {
+        name: this.post('name'),
+      };
+      
+      let pwd = this.post('pwd');
+      let pwdInfo = {};
+      if( pwd ){
+        pwdInfo = await userModel.generatePwd(pwd);
+        editInfo.pwd = pwdInfo.pwd;
+        editInfo.salt = pwdInfo.salt;
+      }
+      
+      await userModel.editInfoById(id, editInfo);      
+      
+      let siteUrl = this.config('siteUrl');
+      await this.redirect(siteUrl('user'));
+      
+    }else{
+      let id = this.get('id');
+      let user = await userModel.getInfoByUid(id);
+
+      this.assign({
+        info: user
+      });
+      this.display();
+    }    
   }
   
   

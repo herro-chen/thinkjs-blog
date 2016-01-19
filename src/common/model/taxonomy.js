@@ -13,6 +13,14 @@ export default class extends think.model.base {
     return this.where(where).order(order).page(page, offset).countSelect();
   }
   
+  getInfoById(id){
+    return this.where({id: id}).find();
+  }
+  
+  editInfoById(id, info){
+    return this.where({id: id}).update(info);
+  }  
+  
   getAllCate(){
     return this.where({type: 1}).select();
   }

@@ -21,7 +21,7 @@
                         </time>
 
                         <h1 class="post-title">
-                            <a href=""><%= info.title%></a>
+                            <a href="<%= config.siteUrl("acticle/" + info.id)%>"><%= info.title%></a>
                         </h1>
                         <!-- / Title, post icon, post date -->
                         <div class="post-content">
@@ -46,6 +46,11 @@
                                     <a href="javascript;" title="<%= info.title%> 上的评论">No comments</a>	
                                 </span>
                             </p>
+                            <div class="post-tags rtc-div">
+                                <%tags.forEach(function(item){%>
+                                <a href="<%= config.siteUrl("tag/" + item.name)%>"><%= item.name%></a>
+                                <%})%>
+                            </div>
                         </div>
                         <!-- /.post-content -->
 
@@ -53,14 +58,14 @@
                         <div class="post-nav clearfix">
                             <%if( ! think.isEmpty(neighbor.prev)){%>
                             <span class="prev">
-                                <a href="/acticle/<%= neighbor.prev.id%>" rel="prev">
+                                <a href="<%= config.siteUrl("acticle/" + neighbor.prev.id)%>" rel="prev">
                                     <span class="arrow">&laquo;</span> <%= neighbor.prev.title%>
                                 </a>
                             </span>
                             <%}%>
                             <%if( ! think.isEmpty(neighbor.next)){%>
                             <span class="next">
-                                <a href="/acticle/<%= neighbor.next.id%>" rel="next">
+                                <a href="<%= config.siteUrl("acticle/" + neighbor.next.id)%>" rel="next">
                                     <span class="arrow">»</span> <%= neighbor.next.title%>
                                 </a>
                             </span>

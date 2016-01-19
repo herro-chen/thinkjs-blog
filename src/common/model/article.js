@@ -16,6 +16,10 @@ export default class extends think.model.base {
     return this.where({id: id}).find();
   }
   
+  editInfoById(id, info){
+    return this.where({id: id}).update(info);
+  }
+  
   getNewList(){
     return this.order("creattime desc").limit(5).select();
   }

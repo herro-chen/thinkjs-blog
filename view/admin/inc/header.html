@@ -1,6 +1,6 @@
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="<%= config.siteUrl("index")%>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
@@ -41,13 +41,13 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="http://www.yuncaijing.com/templates/default/assets/image/user.jpg" class="user-image" alt="User Image">
-                  <span class="hidden-xs"><%=userInfo.name%></span>
+                  <span class="hidden-xs"><%= userInfo.name%></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="http://www.yuncaijing.com/templates/default/assets/image/user.jpg" class="img-circle" alt="User Image">
-                    <p><%=userInfo.name%></p>
+                    <p><%= userInfo.name%></p>
                   </li>
                   <!-- Menu Body -->
                   <li class="user-body">
@@ -59,7 +59,7 @@
                       <a href="#" class="btn btn-default btn-flat">管理</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">退出</a>
+                      <a href="<%= config.siteUrl("index/logout")%>" class="btn btn-default btn-flat">退出</a>
                     </div>
                   </li>
                 </ul>

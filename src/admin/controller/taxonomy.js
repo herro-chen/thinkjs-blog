@@ -7,10 +7,6 @@ export default class extends Base {
    * index action
    * @return {Promise} []
    */
-  init(http){
-    super.init(http);
-  }
-  
   async indexAction(){
     
     this.leftNav = "taxonomy";
@@ -41,5 +37,38 @@ export default class extends Base {
     this.display();
   }
   
+  async editAction(){
+    
+    this.leftNav = "taxonomy";
+    
+    let taxonomyModel = this.model("taxonomy");
+    
+    if(this.isPost()){
+      
+      let id = this.post('id');
+      let editInfo = {
+        name: this.post('name'),
+        slug: this.post('slug'),
+        type: this.post('type'),
+        description: this.post('description'),
+        "parent": this.post('parent')
+      };
+      await taxonomyModel.editInfoById(id, editInfo);      
+      
+      let siteUrl = this.config('siteUrl');
+      await this.redirect(siteUrl('taxonomy'));
+      
+    }else{
+      let id = this.get('id');
+      let taxonomy = await taxonomyModel.getInfoById(id);
+      let cates = await taxonomyModel.getAllCate();
+      this.assign({
+        info: taxonomy,
+        cates: cates
+      });
+      this.display();
+    }
+    
+  }
   
 }

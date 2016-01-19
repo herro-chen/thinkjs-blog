@@ -261,6 +261,15 @@ export default class extends Base {
     let info = await this.model("article").getInfoByid(id);
     if(think.isEmpty(info)) return think.statusAction(404, this.http);
     
+    //获取tags
+    let taxonomy = await this.model("relationships").getTaxonomyByAid(id);
+    let tags = [];
+    taxonomy.forEach(function(item){
+      if(item.type == 2){
+        tags.push(item);
+      }
+    })
+    
     //获取meta
     let metaList = await this.model("article_meta").getInfoByAid(id);
     let metas = {};
@@ -283,6 +292,7 @@ export default class extends Base {
     
     this.assign({
       info: info,
+      tags: tags,
       metas: metas,
       neighbor: neighbor
     });

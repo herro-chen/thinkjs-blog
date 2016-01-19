@@ -6,11 +6,7 @@ export default class extends Base {
   /**
    * index action
    * @return {Promise} []
-   */
-  init(http){
-    super.init(http);
-  }
-  
+   */   
   async indexAction(){
     
     this.leftNav = "article";
@@ -45,14 +41,44 @@ export default class extends Base {
     
     this.leftNav = "article";
     
+    let articleModel = this.model("article");
+    
     if(this.isPost()){
-      console.log(this.post());
+
+      let id = this.post('id');      
+      let editInfo = {
+        title: this.post('title'),
+        thumbnail: this.post('thumbnail'),
+        description: this.post('description'),
+        content: this.post('content')
+      };
+      await articleModel.editInfoById(id, editInfo);
+      
+      let relationshipsModel = this.model("relationships");
+      
+      let relationships = await relationshipsModel.getAllByAid(id);
+      
+      let oldRelation = [];
+      relationships.forEach(function(item){
+        oldRelation.push(item.taxonomy_id + "");
+      })
+      
+      let cates = [], tags= [];
+      cates = strToarr(this.post('cates'));
+      tags = strToarr(this.post('tags'));
+      let newRelation = [];
+      newRelation = newRelation.concat(cates, tags);
+
+      let relations = addORdelForRelation(oldRelation, newRelation);
+      await relationshipsModel.addListByAid(id, relations.add);
+      await relationshipsModel.delListByAid(id, relations.del);
+      
       let siteUrl = this.config('siteUrl');
-      this.http.redirect(siteUrl('article'));
+      await this.redirect(siteUrl('article'));
     }else{
       
       let id = this.get("id");
-      let info = await this.model("article").getInfoByid(id); 
+      let info = await articleModel.getInfoByid(id); 
       let metas = await this.model("article_meta").getInfoByAid(id); 
       
       let relationships = await this.model("relationships").getAllByAid(id); 
@@ -64,10 +90,11 @@ export default class extends Base {
           info.tags.push(item.taxonomy_id);
         }
       })      
-      
+
       let cates = [], tags= [];
       cates = await this.model("taxonomy").getAllCate(); 
       tags = await this.model("taxonomy").getHotTag();
+
       this.assign({
         cates: cates,
         tags: tags,

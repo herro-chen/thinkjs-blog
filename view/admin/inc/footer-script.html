@@ -6,3 +6,14 @@
     <script src="<%=config.staticUrl("/static/plugins/iCheck/icheck.min.js")%>"></script>
     <!-- AdminLTE App -->
     <script src="<%=config.staticUrl("/static/js/app.min.js")%>"></script>
+    <!-- CK Editor -->
+    <script src="<%=config.staticUrl("/static/plugins/ckeditor/ckeditor.js")%>"></script>
+    <script src="<%=config.staticUrl("/static/plugins/select2/select2.full.min.js")%>"></script>
+    <script>
+      $(function () {
+        if($('#textarea').length > 0){
+          CKEDITOR.replace('textarea');
+        }
+        $(".select2").select2();
+      });
+    </script>

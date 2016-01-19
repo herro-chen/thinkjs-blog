@@ -21,9 +21,21 @@ export default class extends think.model.base {
     return this.where({id: id}).find();
   }
   
+  editInfoById(id, info){
+    return this.where({id: id}).update(info);
+  }
+  
+  generatePwd(pwd){
+    let salt = Math.floor(Math.random() * 100000);
+    return {
+      pwd: think.md5(pwd + "" + salt),
+      salt: salt
+    }
+  }
+  
   checkPwd(pwd, userInfo){
-    let md5Pwd = think.md5(pwd + userInfo.salt);
-    if(md5Pwd + userInfo.pwd)
+    let md5Pwd = think.md5(pwd + "" + userInfo.salt);
+    if(md5Pwd == userInfo.pwd)
     {
       return true;
     }

@@ -56,7 +56,7 @@
                       <td><%= info.parent%></td>
                       <td><%= info.count%></td>
                       <td>
-                        <span class="badge bg-green">修改</span>
+                        <a class="badge bg-green" href="<%= config.siteUrl("taxonomy/edit/" + info.id)%>">修改</a>
                         <span class="badge bg-red">删除</span>
                       </td>
                     </tr>

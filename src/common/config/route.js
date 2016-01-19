@@ -21,5 +21,7 @@ export default [
   [/^admin\/article\/index\/([1-9]([0-9]+)?)$/, "admin/article/index?page=:1"],
   [/^admin\/article\/edit\/([1-9]([0-9]+)?)$/, "admin/article/edit?id=:1"],
   [/^admin\/taxonomy\/index\/([1-9]([0-9]+)?)$/, "admin/taxonomy/index?page=:1"],
-  
+  [/^admin\/taxonomy\/edit\/([1-9]([0-9]+)?)$/, "admin/taxonomy/edit?id=:1"],
+  [/^admin\/user\/index\/([1-9]([0-9]+)?)$/, "admin/user/index?page=:1"],
+  [/^admin\/user\/edit\/([1-9]([0-9]+)?)$/, "admin/user/edit?id=:1"],
 ];
