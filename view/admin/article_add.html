@@ -21,7 +21,7 @@
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">文档 修改</h3>
+                  <h3 class="box-title">文档 添加</h3>
                 </div><!-- /.box-header -->
                 <form role="form" method="post">
                   <div class="box-body">
@@ -29,24 +29,22 @@
                       <div class="col-md-8">
                         <div class="form-group">
                           <label for="title">标题</label>
-                          <input type="text" class="form-control" id="title" name="title" value="<%= info.title%>" placeholder="标题">
+                          <input type="text" class="form-control" id="title" name="title" value="" placeholder="标题">
                         </div>
                         <div class="form-group">
                           <label for="thumbnail">缩略图</label>
-                          <input type="hidden" id="thumbnail" name="thumbnail" value="<%= info.thumbnail%>">
+                          <input type="hidden" id="thumbnail" name="thumbnail" value="">
                           <input type="file" onchange="insert_pic(this)" accept="image/gif,image/jpeg,image/png">
                           <p class="help-block">上传图片</p>
-                          <div><img id="thumbnail_img" src="<%= config.staticUrl(info.thumbnail)%>" style="height:100px"/></div>
+                          <div><img id="thumbnail_img" src="" style="height:100px"/></div>
                         </div>
                         <div class="form-group">
                           <label>简介</label>
-                          <textarea class="form-control" rows="3" name="description" placeholder="简介"><%= info.description%></textarea>
+                          <textarea class="form-control" rows="3" name="description" placeholder="简介"></textarea>
                         </div>
                         <div class="form-group">
                           <label>内容</label>
-                          <textarea id="textarea" name="content" rows="10" cols="80">
-                            <%= info.content%>
-                          </textarea>
+                          <textarea id="textarea" name="content" rows="10" cols="80"></textarea>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -54,7 +52,7 @@
                             <label>分类</label>
                             <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" name="cates">
                               <%cates.forEach(function(cate){%>
-                              <option value="<%= cate.id%>" <%if(info.cates.indexOf(cate.id) !== -1 ){%>selected<%}%> ><%= cate.name%></option>
+                              <option value="<%= cate.id%>"><%= cate.name%></option>
                               <%})%>
                             </select>
                           </div><!-- /.form-group -->
@@ -62,7 +60,7 @@
                             <label>标签</label>
                             <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" name="tags">
                               <%tags.forEach(function(tag){%>
-                              <option value="<%= tag.id%>" <%if(info.tags.indexOf(tag.id) !== -1 ){%>selected<%}%>><%= tag.name%></option>
+                              <option value="<%= tag.id%>"><%= tag.name%></option>
                               <%})%>
                             </select>
                           </div><!-- /.form-group -->
@@ -75,7 +73,6 @@
                   </div><!-- /.box-body -->
 
                   <div class="box-footer">
-                    <input type="hidden" name="id" value="<%= info.id%>">
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>

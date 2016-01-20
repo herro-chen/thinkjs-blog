@@ -17,6 +17,10 @@ export default class extends think.model.base {
     return this.where({id: id}).find();
   }
   
+  addInfo(info){
+    return this.add(info); 
+  }
+  
   editInfoById(id, info){
     return this.where({id: id}).update(info);
   }  

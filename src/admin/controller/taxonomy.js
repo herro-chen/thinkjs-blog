@@ -9,13 +9,18 @@ export default class extends Base {
    */
   async indexAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "taxonomy";
+    this.contentNav = {
+      name: '分类',
+      url: siteUrl('taxonomy')
+    }
     
     let where = {};
     let getPage = this.get("page");
     let taxonomy = await this.model("taxonomy").getList(where, '', getPage, 20); 
     
-    let siteUrl = this.config('siteUrl');
+    
     let baseUrl = siteUrl('taxonomy/index/');
     
     let pageConf = {
@@ -37,9 +42,47 @@ export default class extends Base {
     this.display();
   }
   
+  async addAction(){
+    
+    let siteUrl = this.config('siteUrl');
+    this.leftNav = "taxonomy";
+    this.contentNav = {
+      name: '分类',
+      url: siteUrl('taxonomy')
+    }
+    let taxonomyModel = this.model("taxonomy");
+    
+    if(this.isPost()){
+      
+      let addInfo = {
+        name: this.post('name'),
+        slug: this.post('slug'),
+        type: this.post('type'),
+        description: this.post('description'),
+        "parent": this.post('parent')
+      };
+      
+      await taxonomyModel.addInfo(addInfo);
+      await this.redirect(siteUrl('taxonomy'));      
+      
+    }else{
+      let cates = await taxonomyModel.getAllCate();
+      this.assign({
+        cates: cates
+      });
+      this.display();
+    }
+    
+  }
+  
   async editAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "taxonomy";
+    this.contentNav = {
+      name: '分类',
+      url: siteUrl('taxonomy')
+    }
     
     let taxonomyModel = this.model("taxonomy");
     
@@ -53,9 +96,7 @@ export default class extends Base {
         description: this.post('description'),
         "parent": this.post('parent')
       };
-      await taxonomyModel.editInfoById(id, editInfo);      
-      
-      let siteUrl = this.config('siteUrl');
+      await taxonomyModel.editInfoById(id, editInfo); 
       await this.redirect(siteUrl('taxonomy'));
       
     }else{

@@ -26,12 +26,12 @@ export default class extends Base {
     
     //本地存储目录
     let path = '/static/upload/' + year + '/' + month + '/';
-    let dir = './www/' + path;    
-    think.mkdir(dir);
+    let uploadPath = think.RESOURCE_PATH + path;    
+    think.mkdir(uploadPath);
     
     let url = 'http://meizit.com/home/index/index/p/1';//最后一次
-    let download = function(url, dir, filename){
-      let stream = fs.createWriteStream(dir + filename);
+    let download = function(url, uploadPath, filename){
+      let stream = fs.createWriteStream(uploadPath + filename);
       return superagent.get(url).pipe(stream);
     }
     
@@ -83,14 +83,14 @@ export default class extends Base {
                 let content = $('.content').html();
                 let thumbnailName = setName(item.imgUrl);
                 
-                download(item.imgUrl, dir, thumbnailName);//下载缩略图片
+                download(item.imgUrl, uploadPath, thumbnailName);//下载缩略图片
                 let thumbnail = path + thumbnailName;
                 
                 //下载图片替换路径
                 $('.content img').each(function(){
                   let picSrc = $(this).attr('src');
                   let picName = setName(picSrc);
-                  download(picSrc, dir, picName);//下载内容图片
+                  download(picSrc, uploadPath, picName);//下载内容图片
                   
                   let picPath = path + picName;
                   //替换文章图片路径

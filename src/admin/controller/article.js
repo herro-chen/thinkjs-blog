@@ -9,13 +9,16 @@ export default class extends Base {
    */   
   async indexAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "article";
+    this.contentNav = {
+      name: '文档',
+      url: siteUrl('article')
+    }
     
     let where = {};
     let getPage = this.get("page");
     let article = await this.model("article").getList(where, '', getPage, 20); 
-    
-    let siteUrl = this.config('siteUrl');
     let baseUrl = siteUrl('article/index/');
     
     let pageConf = {
@@ -37,9 +40,60 @@ export default class extends Base {
     this.display();
   }
   
+  async addAction(){
+    
+    let siteUrl = this.config('siteUrl');
+    this.leftNav = "article";
+    this.contentNav = {
+      name: '文档',
+      url: siteUrl('article')
+    }
+    
+    let articleModel = this.model("article");
+    
+    if(this.isPost()){
+      
+      let addInfo = {
+        title: this.post('title'),
+        thumbnail: this.post('thumbnail'),
+        description: this.post('description'),
+        content: this.post('content'),
+        source: new Date().getTime()
+      };
+      let id = await articleModel.addInfo(addInfo);
+
+      let cates = [], tags= [];
+      cates = strToarr(this.post('cates'));
+      tags = strToarr(this.post('tags'));
+      let newRelation = [];
+      newRelation = newRelation.concat(cates, tags);
+
+      await relationshipsModel.addListByAid(id, relations.add);
+
+      await this.redirect(siteUrl('article'));
+    }else{
+      
+      let cates = [], tags= [];
+      cates = await this.model("taxonomy").getAllCate(); 
+      tags = await this.model("taxonomy").getHotTag();
+
+      this.assign({
+        cates: cates,
+        tags: tags
+      });        
+      this.display(); 
+    }
+    
+  }
+  
   async editAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "article";
+    this.contentNav = {
+      name: '文档',
+      url: siteUrl('article')
+    }
     
     let articleModel = this.model("article");
     
@@ -72,8 +126,6 @@ export default class extends Base {
       let relations = addORdelForRelation(oldRelation, newRelation);
       await relationshipsModel.addListByAid(id, relations.add);
       await relationshipsModel.delListByAid(id, relations.del);
-      
-      let siteUrl = this.config('siteUrl');
       await this.redirect(siteUrl('article'));
     }else{
       

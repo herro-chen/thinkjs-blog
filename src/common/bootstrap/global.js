@@ -40,3 +40,24 @@
     return arr;
   }
  
+  global.base64Toimg = function(base64Date){
+    let imgArr = base64Date.split(',');
+    let type = imgArr[0];
+    let ext = false, base64 = '';
+    // 判断类型  
+    if(type.indexOf('image/jpeg') !== -1){  
+      ext = '.jpg';  
+    }else if(type.indexOf('image/gif') !== -1){  
+      ext = '.gif';  
+    }else if(type.indexOf('image/png') !== -1){  
+      ext = '.png';  
+    }
+    if(ext){
+      base64 = imgArr[1];
+    }
+    return {
+      ext: ext,
+      base64: base64
+    };
+    
+  }

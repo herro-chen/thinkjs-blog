@@ -20,6 +20,26 @@ export default class extends think.logic.base {
     }
   }
   
+  addAction(){
+    let rules = {};
+    if(this.isGet()){
+      rules = {
+      }      
+    }else{
+      rules = {
+        title: "string|post|required",
+        thumbnail: "string|post|required",
+        description: "string|post|required",
+        content: "string|post|required"
+      }      
+    }
+    
+    let flag = this.validate(rules);
+    if(!flag){
+      return this.fail("validate error", this.errors());
+    }    
+  }
+  
   editAction(){
     
     let rules = {};

@@ -21,7 +21,7 @@
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">分类 修改</h3>
+                  <h3 class="box-title">分类 添加</h3>
                 </div><!-- /.box-header -->
                 <form role="form" method="post">
                   <div class="box-body">
@@ -29,23 +29,23 @@
                       <div class="col-md-8">
                         <div class="form-group">
                           <label for="name">名字</label>
-                          <input type="text" class="form-control" id="name" name="name" value="<%= info.name%>" placeholder="名字">
+                          <input type="text" class="form-control" id="name" name="name" value="" placeholder="名字">
                         </div>
                         <div class="form-group">
                           <label for="slug">slug</label>
-                          <input type="text" class="form-control" id="slug" name="slug" value="<%= info.slug%>" placeholder="slug">
+                          <input type="text" class="form-control" id="slug" name="slug" value="" placeholder="slug">
                         </div>
                         <div class="form-group">
                           <label>简介</label>
-                          <textarea class="form-control" rows="3" name="description" placeholder="简介"><%= info.description%></textarea>
+                          <textarea class="form-control" rows="3" name="description" placeholder="简介"></textarea>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <label>类别</label>
                             <select class="form-control select2" name="type">
-                              <option value="1" <%if(info.type == 1){%>selected="selected"<%}%>>分类</option>
-                              <option value="2" <%if(info.type == 2){%>selected="selected"<%}%>>tag</option>
+                              <option value="1" selected="selected">分类</option>
+                              <option value="2">tag</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -53,7 +53,7 @@
                             <select class="form-control select2" name="parent">
                               <option value="">&nbsp;</option>
                               <%cates.forEach(function(item){%>
-                              <option value="<%= item.id%>" <%if(item.id == info.parent){%>selected="selected"<%}%>><%= item.name%></option>
+                              <option value="<%= item.id%>" ><%= item.name%></option>
                               <%})%>
                             </select>
                         </div>                        
@@ -62,7 +62,6 @@
                   </div><!-- /.box-body -->
 
                   <div class="box-footer">
-                    <input type="hidden" name="id" value="<%= info.id%>">
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>

@@ -9,13 +9,16 @@ export default class extends Base {
    */
   async indexAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "user";
+    this.contentNav = {
+      name: '用户',
+      url: siteUrl('user')
+    }
     
     let where = {};
     let getPage = this.get("page");
-    let users = await this.model("user").getList(where, '', getPage, 20); 
-    
-    let siteUrl = this.config('siteUrl');
+    let users = await this.model("user").getList(where, '', getPage, 20);
     let baseUrl = siteUrl('user/index/');
     
     let pageConf = {
@@ -39,7 +42,12 @@ export default class extends Base {
   
   async editAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "user";
+    this.contentNav = {
+      name: '用户',
+      url: siteUrl('user')
+    }
     
     let userModel = this.model("user");
     
@@ -59,9 +67,7 @@ export default class extends Base {
         editInfo.salt = pwdInfo.salt;
       }
       
-      await userModel.editInfoById(id, editInfo);      
-      
-      let siteUrl = this.config('siteUrl');
+      await userModel.editInfoById(id, editInfo);
       await this.redirect(siteUrl('user'));
       
     }else{

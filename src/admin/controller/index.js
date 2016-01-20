@@ -9,11 +9,15 @@ export default class extends think.controller.base {
    */
   async indexAction(){
     
+    let siteUrl = this.config('siteUrl');
     this.leftNav = "dashboard";
-    
+    this.contentNav = {
+      name: '',
+      url: siteUrl('index')
+    }    
+
     let uid = await this.session("uid");
     if(typeof(uid) == 'undefined' || ! uid){
-      let siteUrl = this.config('siteUrl');
       await this.redirect(siteUrl('index/login')); 
     }
     
