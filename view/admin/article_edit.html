@@ -54,7 +54,7 @@
                             <label>分类</label>
                             <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" name="cates">
                               <%cates.forEach(function(cate){%>
-                              <option value="<%= cate.id%>" <%if(info.cates.indexOf(cate.id) !== -1 ){%>selected<%}%> ><%= cate.name%></option>
+                              <option value="<%= cate.id%>" <%if(info.relationships.indexOf(cate.id) !== -1 ){%>selected<%}%> ><%= cate.name%></option>
                               <%})%>
                             </select>
                           </div><!-- /.form-group -->
@@ -62,7 +62,7 @@
                             <label>标签</label>
                             <select class="form-control select2" multiple="multiple" data-placeholder="Select a State" name="tags">
                               <%tags.forEach(function(tag){%>
-                              <option value="<%= tag.id%>" <%if(info.tags.indexOf(tag.id) !== -1 ){%>selected<%}%>><%= tag.name%></option>
+                              <option value="<%= tag.id%>" <%if(info.relationships.indexOf(tag.id) !== -1 ){%>selected<%}%>><%= tag.name%></option>
                               <%})%>
                             </select>
                           </div><!-- /.form-group -->

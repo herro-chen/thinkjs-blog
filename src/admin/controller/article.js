@@ -50,6 +50,7 @@ export default class extends Base {
     }
     
     let articleModel = this.model("article");
+    let relationshipsModel = this.model("relationships");
     
     if(this.isPost()){
       
@@ -58,6 +59,7 @@ export default class extends Base {
         thumbnail: this.post('thumbnail'),
         description: this.post('description'),
         content: this.post('content'),
+        creattime: '',
         source: new Date().getTime()
       };
       let id = await articleModel.addInfo(addInfo);
@@ -68,7 +70,7 @@ export default class extends Base {
       let newRelation = [];
       newRelation = newRelation.concat(cates, tags);
 
-      await relationshipsModel.addListByAid(id, relations.add);
+      await relationshipsModel.addListByAid(id, newRelation);
 
       await this.redirect(siteUrl('article'));
     }else{
@@ -134,15 +136,11 @@ export default class extends Base {
       let metas = await this.model("article_meta").getInfoByAid(id); 
       
       let relationships = await this.model("relationships").getAllByAid(id); 
-      info.cates = [], info.tags = [],
+      info.relationships = []
       relationships.forEach(function(item){
-        if(item.type == 1){
-          info.cates.push(item.taxonomy_id);
-        }else{
-          info.tags.push(item.taxonomy_id);
-        }
+          info.relationships.push(item.taxonomy_id);
       })      
-
+      console.log(info);
       let cates = [], tags= [];
       cates = await this.model("taxonomy").getAllCate(); 
       tags = await this.model("taxonomy").getHotTag();
