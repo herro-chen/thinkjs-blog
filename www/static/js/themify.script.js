@@ -474,6 +474,24 @@ jQuery(window).load(function() {
 		itemSelector : '.post',
 		transformsEnabled : false
 	});
+  
+  $('.aligncenter').lazyload({
+      effect : "fadeIn",
+      threshold : 200,
+      load: function(){
+        var $container = jQuery('#content .set-month');
+        $container.isotope({
+          resizable: false,
+          layoutMode: 'masonry',
+          spineAlign: {
+            gutterWidth: 0
+          },
+          itemSelector : '.post',
+          transformsEnabled : false
+        }).isotope('reLayout');
+      }
+  });  
+
 	jQuery(window).resize();
   
 });

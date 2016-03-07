@@ -40,7 +40,9 @@
                                 <!-- / Title, post icon, post date -->
 
                                 <figure class="post-image ">
-                                    <a href="/acticle/<%= info.id%>"><img src="<%= config.staticUrl(info.thumbnail)%>" alt="<%- moment(info.creattime).format("YYYY-MM-DD")%>" /></a>
+                                    <a href="/acticle/<%= info.id%>">
+                                        <img src="<%= config.staticUrl(info.thumbnail)%>" alt="<%- moment(info.creattime).format("YYYY-MM-DD")%>" />
+                                    </a>
                                 </figure>
 
                                 <div class="post-content">
